@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     {
         while (true)
         {
-            tmpIfTimeElapsed.text = Mathf.FloorToInt(Time.time).ToString() + "s";
+            tmpIfTimeElapsed.text = Mathf.FloorToInt(Time.timeSinceLevelLoad).ToString() + "s";
             yield return _waitForSeconds1_0;
         }
     }
