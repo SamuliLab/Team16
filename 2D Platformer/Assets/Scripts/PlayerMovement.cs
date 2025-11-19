@@ -1,9 +1,12 @@
-using CoinSystem;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private static WaitForSeconds _waitForSeconds1_0 = new(1.0f);
+
     public Rigidbody2D rb;
     public Animator animator;
     bool isFacingRight = true;
@@ -44,11 +47,24 @@ public class PlayerMovement : MonoBehaviour
     bool isWallSliding;
     float wallJumpDirection;
 
+    [Header("UI")]
+    public TMPro.TMP_InputField tmpIfTimeElapsed;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        StartCoroutine(CheckStatus());
+    }
+
+    IEnumerator CheckStatus()
+    {
+        while (true)
+        {
+            tmpIfTimeElapsed.text = Mathf.FloorToInt(Time.time).ToString() + "s";
+            yield return _waitForSeconds1_0;
+        }
     }
 
     // Update is called once per frame
@@ -179,6 +195,12 @@ public class PlayerMovement : MonoBehaviour
             ls.x *= -1;
             transform.localScale = ls;
         }
+    }
+
+    public void ResetLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
     }
 
 
