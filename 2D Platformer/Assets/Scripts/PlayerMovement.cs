@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     bool isFacingRight = true;
 
+
     [Header("Movement")]
     public float movementSpeed = 5f;
     public float horizontalMovement;
@@ -46,6 +47,12 @@ public class PlayerMovement : MonoBehaviour
     public float wallSlideSpeed = 2f;
     bool isWallSliding;
     float wallJumpDirection;
+
+    [Header("Pausing")]
+    [SerializeField] bool isPaused = false;
+    public PlayerInput playerInput;
+
+
 
     [Header("UI")]
     public TMPro.TMP_InputField tmpIfTimeElapsed;
@@ -201,6 +208,21 @@ public class PlayerMovement : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
+    }
+
+    public void PauseGame()
+    {
+        isPaused = !isPaused;
+        if (isPaused)
+        {
+            Time.timeScale = 0f;
+            playerInput.enabled = false;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            playerInput.enabled = true;
+        }
     }
 
 
