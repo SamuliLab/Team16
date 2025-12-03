@@ -11,8 +11,9 @@ public class GameLogic : MonoBehaviour
     private PauseMenu pauseMenu;
     private static WaitForSeconds _waitForSeconds1_0 = new(1.0f);
     private bool GameOver;
-    private int PlayerScore;
     private string endMessage;
+    public int PlayerScore;
+    public string PlayerName;
 
     // Start is called before the first frame update
     void Start()

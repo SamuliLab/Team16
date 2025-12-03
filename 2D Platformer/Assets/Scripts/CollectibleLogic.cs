@@ -9,7 +9,7 @@ public class CollectibleLogic : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        itemsHeld = 0; // Initialize items held to 0
     }
 
     // Update is called once per frame
@@ -26,7 +26,8 @@ public class CollectibleLogic : MonoBehaviour
             // Increment the score by 1
             itemsHeld ++;
             Debug.Log("Item collected");
-            Debug.Log("Items collected: " + itemsHeld);
+            // Update PlayerPrefs with the new score
+            PlayerPrefs.SetInt(scorePointsKey, itemsHeld);
 
             // Destroy the item object
             Destroy(gameObject);
