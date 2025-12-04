@@ -1,4 +1,6 @@
 using System.Collections;
+using HighScores;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -69,26 +71,29 @@ public class BackendHandler : MonoBehaviour
         }
         return hsList;
     }
-
-        // Backend handling
-    string urlBackendHighScoresFile = "";
+/*
+        Server Communication
+*/
+    // 1. Fetching data from the server
+    // Determine which URL to use for fetching high scores
+    string urlBackendHighScores = "";
+    // Pure JSON file
     public void FetchHighScoresJSONFile()
     {
         fetchCounter++;
         Debug.Log("FetchHighScoresJSONFile called.");
-        // Get the JSON file from backend server
-        urlBackendHighScoresFile = "https://niisku.lab.fi/~kala/speedgate/highscores.json";
-        StartCoroutine(GetRequestForScores(urlBackendHighScoresFile));
+        urlBackendHighScores = "https://niisku.lab.fi/~kala/speedgate/highscores.json";
+        StartCoroutine(GetRequestForScores(urlBackendHighScores));
     }
+    // Scores from Database via PHP API
     public void FetchHighScoresJSON()
     {
         fetchCounter++;
         Debug.Log("FetchHighScoresJSON called.");
-        // Get the highscores from server database via PHP API
-        urlBackendHighScoresFile = "https://niisku.lab.fi/~kala/speedgate/api/highscores.php";
-        StartCoroutine(GetRequestForScores(urlBackendHighScoresFile));
+        urlBackendHighScores = "https://niisku.lab.fi/~kala/speedgate/api/highscores.php";
+        StartCoroutine(GetRequestForScores(urlBackendHighScores));
     }
-
+    // Coroutine for sending GET request and handling response
     IEnumerator GetRequestForScores(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -123,6 +128,70 @@ public class BackendHandler : MonoBehaviour
                 Debug.Log("Received(UTF8): " + resultStr);
                 Debug.Log("Received(HS): " + JsonUtility.ToJson(hs));
             }
+        }
+    }
+
+    // 2. Sending data to the server
+    // Construct entry for the database
+    public TMPro.TMP_InputField playerNameInput;
+    public TMPro.TMP_InputField playerScoreInput;
+    public UnityEngine.UI.Button postResultsButton;
+    bool scoreInputsOk = false;
+    public void PostGameResults()
+    {
+        checkScore();
+        if (!scoreInputsOk) return;
+        HighScore hsItem = new HighScore();
+        hsItem.playerName = playerNameInput.text;
+        hsItem.playerScore = int.Parse(playerScoreInput.text);
+        Debug.Log("PostGameResults called. Player: " + hsItem.playerName + ", Score: " + hsItem.playerScore);
+        Debug.Log("JSON to send: " + JsonUtility.ToJson(hsItem));
+        StartCoroutine(PostRequestForScores(urlBackendHighScores, hsItem));
+    }
+    // Coroutine for sending POST request with game results
+    IEnumerator PostRequestForScores(string uri, HighScore hsItem)
+    {
+        using (UnityWebRequest webRequest = new UnityWebRequest(uri, "POST"))
+        {
+            InsertToLog("[" + fetchCounter + "] POST Request sent to " + uri);
+            tmpTextLog.text = log;
+
+            // Convert HighScore item to json string
+            string jsonData = JsonUtility.ToJson(hsItem);
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
+
+            // Set uploadHandler and downloadHandler
+            webRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+            webRequest.SetRequestHeader("Accept", "application/json");
+
+            // Request and wait for a response
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.isNetworkError)
+            {
+                InsertToLog("Error encountered: " + webRequest.error);
+                tmpTextLog.text = log;
+                Debug.Log("Error: " + webRequest.error);
+            }
+            else
+            {
+                InsertToLog("Game results posted successfully.");
+                tmpTextLog.text = log;
+                Debug.Log("Response: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+    void checkScore()
+    {
+        if (float.TryParse(playerScoreInput.text, out _) && playerNameInput.text.Trim().Length > 0)
+        {
+            scoreInputsOk = true;
+        }
+        else
+        {
+            scoreInputsOk = false;
         }
     }
 }
