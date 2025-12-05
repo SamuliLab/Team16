@@ -24,15 +24,8 @@ public class MainController : MonoBehaviour
     public void SavePlayerName()
     {
         string playerName = playerNameInput.text;
-        // Check if submitted name is valid, then save it to PlayerPrefs
-        if (!string.IsNullOrEmpty(playerName) && playerName.Length > 0)
-        {
-            Debug.Log("Player name submitted: " + playerName);
-            PlayerPrefs.SetString(GameLogic.playerNameKey, playerName);
-        } else
-        {
-            Debug.Log("Invalid player name submitted.");
-        }
+        PlayerPrefs.SetString(GameLogic.playerNameKey, playerName);
+        Debug.Log("Player name saved: " + playerName);
     }
     public void StartLevel(int levelIndex)
     {
