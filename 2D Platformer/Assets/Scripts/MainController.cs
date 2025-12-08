@@ -6,13 +6,14 @@ using UnityEngine;
 public class MainController : MonoBehaviour
 {
     public TMP_InputField playerNameInput;
+    public TMP_Text playerNameError;
 
     [SerializeField]
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        playerNameError.text = "";
     }
 
     // Update is called once per frame
@@ -31,12 +32,20 @@ public class MainController : MonoBehaviour
             PlayerPrefs.SetString(GameLogic.playerNameKey, playerName);
         } else
         {
-            Debug.Log("Invalid player name submitted.");
+            playerNameError.text = "Invalid player name!";
         }
     }
     public void StartLevel(int levelIndex)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(levelIndex);
+        // Make sure that a name has been submitted
+        string playerName = playerNameInput.text;
+        if (!string.IsNullOrEmpty(playerName))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(levelIndex);
+        } else
+        {
+            playerNameError.text = "Submit a name first!";
+        }
     }
     public void QuitGame()
     {
