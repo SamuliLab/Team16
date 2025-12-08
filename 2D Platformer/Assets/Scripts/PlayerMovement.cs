@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private static WaitForSeconds _waitForSeconds1_0 = new(1.0f);
+/*     public TMPro.TMP_Text tmpTextEndMessage; */
 
+    private static WaitForSeconds _waitForSeconds1_0 = new(1.0f);
+/*     private bool GameOver;
+    private int PlayerScore;
+    private string endMessage;
+ */
     public Rigidbody2D rb;
     public Animator animator;
     bool isFacingRight = true;
@@ -62,17 +67,29 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(CheckStatus());
+/*         GameOver = false; // Game is != over at start
+        PlayerScore = 0; // Player score starts at 0
+        tmpTextEndMessage.text = ""; // Make sure the end message is empty
+        StartCoroutine(CheckStatus()); */
     }
 
-    IEnumerator CheckStatus()
+/*     IEnumerator CheckStatus() /// MOVED TO GameLogic.cs THIS SHOULD BE REMOVED ONCE IT WORKS
     {
         while (true)
         {
-            tmpIfTimeElapsed.text = Mathf.FloorToInt(Time.timeSinceLevelLoad).ToString() + "s";
-            yield return _waitForSeconds1_0;
+            GameObject[] keys = GameObject.FindGameObjectsWithTag("key"); // Initialize array of all keys in scene
+            if (keys.Length == 0 && !GameOver) // If no keys remain and game is not over
+            {
+                endMessage = "Congratulations!\nYou completed the game. Your score was:\n" + PlayerScore.ToString();
+                tmpTextEndMessage.text = endMessage; // Display end message
+                GameOver = true;
+            }
+                tmpIfTimeElapsed.text = Mathf.FloorToInt(Time.timeSinceLevelLoad).ToString() + "s";
+                PlayerScore ++;
+                yield return _waitForSeconds1_0;
+                Debug.Log("Keys remaining: " + keys.Length.ToString());
         }
-    }
+    } */
 
     // Update is called once per frame
     void Update()
@@ -224,7 +241,6 @@ public class PlayerMovement : MonoBehaviour
             playerInput.enabled = true;
         }
     }
-
 
     private void OnDrawGizmosSelected()
     {
