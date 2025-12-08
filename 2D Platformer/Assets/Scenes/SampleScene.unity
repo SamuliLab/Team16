@@ -6129,6 +6129,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wallSlideSpeed: 3
+  wallJumpForceX: 7
+  wallJumpForceY: 10
   isPaused: 0
   playerInput: {fileID: 1301038718}
   tmpIfTimeElapsed: {fileID: 90273981}
