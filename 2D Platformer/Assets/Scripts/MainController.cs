@@ -1,7 +1,8 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using JetBrains.Annotations;
 using System.Collections;
 using TMPro;
-using UnityEngine;
 
 public class MainController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class MainController : MonoBehaviour
 
     }
     
+    // Handle saving player name from user input
     public void SavePlayerName()
     {
         string playerName = playerNameInput.text;
@@ -35,6 +37,8 @@ public class MainController : MonoBehaviour
             playerNameError.text = "Invalid player name!";
         }
     }
+    
+    // Start button calls this
     public void StartLevel(int levelIndex)
     {
         // Make sure that a name has been submitted
@@ -47,8 +51,12 @@ public class MainController : MonoBehaviour
             playerNameError.text = "Submit a name first!";
         }
     }
+    // Exit button calls this
     public void QuitGame()
     {
         Application.Quit();
     }
 }
+
+
+
