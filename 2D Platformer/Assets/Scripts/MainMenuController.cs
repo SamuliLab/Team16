@@ -1,17 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
-
-public void StartLevel(int levelIndex)
+    
+    
+    // Start button calls this
+    public void StartLevel(int levelIndex)
     {
         SceneManager.LoadScene(levelIndex);
     }
-
-public void QuitGame()
+    // Exit button calls this
+    public void QuitGame()
     {
         Application.Quit();
     }
-
 }
+
+
+
