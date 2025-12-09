@@ -48,8 +48,8 @@ public class CollectibleLogic : MonoBehaviour
     {
         // Get the world position of the collectible
         Vector3 worldPosition = transform.position;
-        Vector3Int startPosition = doorTilemap.WorldToCell(worldPosition - new Vector3(doorDestructionRadius, doorDestructionRadius, 0)); // Bottom-left corner of the area
-        Vector3Int endPosition = doorTilemap.WorldToCell(worldPosition + new Vector3(doorDestructionRadius, doorDestructionRadius, 0)); // Top-right corner of the area
+        Vector3Int startPosition = doorTilemap.WorldToCell(worldPosition - new Vector3(doorDestructionRadius, doorDestructionRadius, 0)); 
+        Vector3Int endPosition = doorTilemap.WorldToCell(worldPosition + new Vector3(doorDestructionRadius, doorDestructionRadius, 0)); 
 
         // Loop through the grid cells in the defined area
         for (int x = startPosition.x; x <= endPosition.x; x++)
@@ -64,13 +64,11 @@ public class CollectibleLogic : MonoBehaviour
                 // Check if the tile at this position is the Door tile
                 if (tile == doorTile)
                 {
-                    // Poista tile satunnaisesti
-                    if (Random.value <= destructionChance)
-                    {
-                        // Destroy the tile by setting it to null (poistetaan vain tile)
-                        doorTilemap.SetTile(cellPosition, null);
-                        Debug.Log("Door tile destroyed at position: " + cellPosition);
-                    }
+                  
+                    
+                    doorTilemap.SetTile(cellPosition, null);
+                    Debug.Log("Door tile destroyed at position: " + cellPosition);
+                    
                 }
             }
         }
