@@ -440,6 +440,7 @@ GameObject:
   m_Component:
   - component: {fileID: 145799766}
   - component: {fileID: 145799765}
+  - component: {fileID: 145799767}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -480,6 +481,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &145799767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145799764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5ec48b0bc95fa4abd31a1e1bd41ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorManager
+  normalCursor: {fileID: 2800000, guid: 04bf48a919b23694da69fbd325b61375, type: 3}
+  hoverCursor: {fileID: 2800000, guid: bddc80e2fd08cc549b92ed5a835c0416, type: 3}
+  clickCursor: {fileID: 2800000, guid: 8004df18528acc34ab6ffa30b3f5f258, type: 3}
 --- !u!1 &166590557
 GameObject:
   m_ObjectHideFlags: 0
@@ -6120,6 +6136,7 @@ MonoBehaviour:
   wallJumpForceX: 7
   wallJumpForceY: 10
   isPaused: 0
+  pauseMenu: {fileID: 0}
   playerInput: {fileID: 1301038718}
   tmpIfTimeElapsed: {fileID: 90273981}
 --- !u!114 &1301038718
@@ -6896,8 +6913,8 @@ SceneRoots:
   - {fileID: 1301038715}
   - {fileID: 1782289035}
   - {fileID: 763266164}
-  - {fileID: 1050370251}
   - {fileID: 1672562069}
   - {fileID: 713485586}
   - {fileID: 2007712526}
   - {fileID: 932708931}
+  - {fileID: 1050370251}
