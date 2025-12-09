@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -61,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Pausing")]
     [SerializeField] bool isPaused = false;
+    public GameObject pauseMenu;
     public PlayerInput playerInput;
 
 
@@ -99,7 +101,17 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
+        // Toggle pause state with assigned pause button
+        if (playerInput.actions["pause"].IsPressed() && !isPaused)
+        {
+            PauseGame();
+        }
+        else if (playerInput.actions["pause"].IsPressed() && isPaused)
+        {
+            ResumeGame();
+        }
+        // Dashing check        
         if (isDashing)
         {
             dashTimer -= Time.deltaTime;
@@ -255,12 +267,25 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Restart button
     public void ResetLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
     }
-
+    // Resume button
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1; // Resume the game
+        pauseMenu.SetActive(false); // Hide pause menu
+    }
+    // Quit button
+    public void QuitGame()
+    {
+        SceneManager.LoadScene(0); // Main Menu should be at index 0
+    }
+    // Pause
     public void PauseGame()
     {
         isPaused = !isPaused;
@@ -268,6 +293,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Time.timeScale = 0f;
             playerInput.enabled = false;
+            pauseMenu.SetActive(true);
         }
         else
         {
