@@ -7,8 +7,8 @@ public class GameLogic : MonoBehaviour
 {
 
     public TMPro.TMP_InputField tmpIfTimeElapsed;
+    public GameObject GameOverScreen;
     public TMPro.TMP_Text tmpTextEndMessage;
-    public UnityEngine.UI.Button btnMainMenu;
     public static string playerScoreKey = "PlayerScoreKey"; // Key for storing player score in PlayerPrefs
     public static string playerNameKey = "PlayerNameKey"; // Key for storing player name in PlayerPrefs
     public static string gameOverFlag = "GameOverFlag"; // Key for storing game over flag in PlayerPrefs
@@ -38,14 +38,16 @@ public class GameLogic : MonoBehaviour
             GameObject[] keys = GameObject.FindGameObjectsWithTag("key"); // Initialize array of all keys in scene
             if (keys.Length == 0 && !GameOver) // If no keys remain and game is not over
             {
-                PlayerPrefs.SetInt(playerScoreKey, PlayerScore); // Save player score to PlayerPrefs
-                PlayerPrefs.SetString(gameOverFlag, "true"); // Set game over flag in PlayerPrefs
+                // Save player score to PlayerPrefs
+                PlayerPrefs.SetInt(playerScoreKey, PlayerScore);
+                // Set game over flag in PlayerPrefs
+                PlayerPrefs.SetString(gameOverFlag, "true");
+                // Update game over message and enable the game over screen
                 endMessage = "Congratulations!\nYou completed the game. Your score was:\n" + PlayerScore.ToString();
-                tmpTextEndMessage.text = endMessage; // Display end message
+                tmpTextEndMessage.text = endMessage;
+                GameOverScreen.SetActive(true);
                 GameOver = true;
                 Time.timeScale = 0; // Stops the game
-                btnMainMenu.gameObject.SetActive(true);
-                // Load UI here for buttons to restart or go to main menu
             }
                 tmpIfTimeElapsed.text = Mathf.FloorToInt(Time.timeSinceLevelLoad).ToString() + "s";
                 PlayerScore ++;
@@ -56,5 +58,9 @@ public class GameLogic : MonoBehaviour
     public void QuitToMainMenu()
     {
         SceneManager.LoadScene(0); // Assuming main menu is at index 0
+    }
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

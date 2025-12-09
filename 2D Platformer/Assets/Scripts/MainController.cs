@@ -8,12 +8,15 @@ public class MainController : MonoBehaviour
 {
     public TMP_InputField playerNameInput;
     public TMP_Text playerNameError;
+    public GameObject nameMenu;
+    public GameObject mainMenu;
 
     [SerializeField]
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Clear name error text
         playerNameError.text = "";
     }
 
@@ -32,29 +35,24 @@ public class MainController : MonoBehaviour
         {
             Debug.Log("Player name submitted: " + playerName);
             PlayerPrefs.SetString(GameLogic.playerNameKey, playerName);
+            playerNameError.text = "";
         } else
         {
             playerNameError.text = "Invalid player name!";
         }
     }
     
-    // Start button calls this
-    public void StartLevel(int levelIndex)
+    // Check if a Player Name has been saved before moving to main menu
+    public void CheckPlayerName()
     {
-        // Make sure that a name has been submitted
-        string playerName = playerNameInput.text;
-        if (!string.IsNullOrEmpty(playerName))
+        if (!string.IsNullOrEmpty(PlayerPrefs.GetString(GameLogic.playerNameKey)))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(levelIndex);
+            nameMenu.SetActive(false);
+            mainMenu.SetActive(true);
         } else
         {
-            playerNameError.text = "Submit a name first!";
+            playerNameError.text = "No player name given!";
         }
-    }
-    // Exit button calls this
-    public void QuitGame()
-    {
-        Application.Quit();
     }
 }
 
