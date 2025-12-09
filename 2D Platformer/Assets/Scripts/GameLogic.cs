@@ -8,7 +8,7 @@ public class GameLogic : MonoBehaviour
 
     public TMPro.TMP_InputField tmpIfTimeElapsed;
     public TMPro.TMP_Text tmpTextEndMessage;
-    public UnityEngine.UI.Button btnMainMenu;
+    public GameObject GameOverScreen;
     public static string playerScoreKey = "PlayerScoreKey"; // Key for storing player score in PlayerPrefs
     public static string playerNameKey = "PlayerNameKey"; // Key for storing player name in PlayerPrefs
     public static string gameOverFlag = "GameOverFlag"; // Key for storing game over flag in PlayerPrefs
@@ -44,8 +44,8 @@ public class GameLogic : MonoBehaviour
                 tmpTextEndMessage.text = endMessage; // Display end message
                 GameOver = true;
                 Time.timeScale = 0; // Stops the game
-                btnMainMenu.gameObject.SetActive(true);
-                // Load UI here for buttons to restart or go to main menu
+                // Activate Game Over UI
+                GameOverScreen.SetActive(true);
             }
                 tmpIfTimeElapsed.text = Mathf.FloorToInt(Time.timeSinceLevelLoad).ToString() + "s";
                 PlayerScore ++;
