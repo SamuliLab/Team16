@@ -138,9 +138,31 @@ public class PlayerMovement : MonoBehaviour
         
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
+        animator.SetBool("isGrounded", isGrounded);
+
+        if (isGrounded)
+    {
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isFalling", false);
+    }
+    else
+    {
+        float yVel = rb.linearVelocity.y;
+        if (yVel > 0.1f)
+        {
+            // Nousu, myös tuplahyppy
+            animator.SetBool("isJumping", true);
+            animator.SetBool("isFalling", false);
+        }
+        else if (yVel < -0.1f)
+        {
+            // Putoaminen
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isFalling", true);
+        }
 
     }
-
+    }
     private void Gravity()
     {
         if (rb.linearVelocity.y < 0)
