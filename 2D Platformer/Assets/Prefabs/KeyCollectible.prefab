@@ -106,6 +106,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleLogic
   itemsHeld: 0
   rotationSpeed: 50
+  doorDestructionRadius: 5
+  doorTilemap: {fileID: 0}
+  doorTile: {fileID: 11400000, guid: 68c41bdd51f79de439e8f47c8ee289e9, type: 2}
 --- !u!61 &-3881048266154660966
 BoxCollider2D:
   m_ObjectHideFlags: 0

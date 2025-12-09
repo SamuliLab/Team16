@@ -11,7 +11,7 @@ public class CollectibleLogic : MonoBehaviour
     public float doorDestructionRadius = 5f;
     public Tilemap doorTilemap; // Viittaa Door Tilemapiin
     public TileBase doorTile; // Viittaa siihen Door-tileen, jonka haluat poistaa
-    public float destructionChance = 0.5f; // Mahdollisuus poistaa tile (0-1)
+    // public float destructionChance = 0.5f; // Mahdollisuus poistaa tile (0-1)
 
     void Start()
     {
@@ -64,13 +64,14 @@ public class CollectibleLogic : MonoBehaviour
                 // Check if the tile at this position is the Door tile
                 if (tile == doorTile)
                 {
+                    doorTilemap.SetTile(cellPosition, null);
+                    Debug.Log("Door tile destroyed at position: " + cellPosition);
                     // Poista tile satunnaisesti
-                    if (Random.value <= destructionChance)
-                    {
+                    //if (Random.value <= destructionChance)
+                    //{
                         // Destroy the tile by setting it to null (poistetaan vain tile)
-                        doorTilemap.SetTile(cellPosition, null);
-                        Debug.Log("Door tile destroyed at position: " + cellPosition);
-                    }
+                        
+                    //}
                 }
             }
         }
