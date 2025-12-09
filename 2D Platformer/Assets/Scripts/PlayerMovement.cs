@@ -134,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         Gravity();
         Flip();
         ProcessWallSlide();
+        HazardCheck();
         
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
@@ -254,6 +255,20 @@ public class PlayerMovement : MonoBehaviour
     private bool WallCheck()
     {
         return Physics2D.OverlapBox(wallCheck.position, wallCheckSize, 0f, wallLayer);
+    }
+
+    private void HazardCheck()
+    {
+        if (Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, LayerMask.GetMask("Hazard")))
+        {
+            // Restart level
+            ResetLevel();
+        }
+        else if (Physics2D.OverlapBox(wallCheck.position, wallCheckSize, 0f, LayerMask.GetMask("Hazard")))
+        {
+            // Restart level
+            ResetLevel();
+        }
     }
 
     private void Flip()
