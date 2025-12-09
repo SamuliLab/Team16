@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
+[RequireComponent(typeof(AudioSource))]
 public class CollectibleLogic : MonoBehaviour
 {
     public static string scorePointsKey = "ScorePoints"; // Key for PlayerPrefs
@@ -12,10 +14,11 @@ public class CollectibleLogic : MonoBehaviour
     public Tilemap doorTilemap; // Viittaa Door Tilemapiin
     public TileBase doorTile; // Viittaa siihen Door-tileen, jonka haluat poistaa
     public float destructionChance = 0.5f; // Mahdollisuus poistaa tile (0-1)
-
+    public AudioClip collectSound; // Sound to play on collection
     void Start()
     {
         itemsHeld = 0; // Initialize items held to 0
+
     }
 
     void Update()
@@ -26,12 +29,18 @@ public class CollectibleLogic : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
+
         if (other.gameObject.CompareTag("Player"))
-        {
+        {   
             // Increment the score by 1
             itemsHeld++;
             Debug.Log("Item collected");
 
+            if (collectSound != null)
+            {
+                AudioSource.PlayClipAtPoint(collectSound, transform.position, 1f);
+            }
             // Update PlayerPrefs with the new score
             PlayerPrefs.SetInt(scorePointsKey, itemsHeld);
 
@@ -73,4 +82,5 @@ public class CollectibleLogic : MonoBehaviour
             }
         }
     }
+
 }
