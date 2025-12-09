@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.44127756, g: 0.89433956, b: 0.16705582, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,10 +105,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleLogic
   itemsHeld: 0
-  rotationSpeed: 50
+  rotationSpeed: 150.7
   doorDestructionRadius: 5
   doorTilemap: {fileID: 0}
   doorTile: {fileID: 11400000, guid: 68c41bdd51f79de439e8f47c8ee289e9, type: 2}
+  destructionChance: 0.5
 --- !u!61 &-3881048266154660966
 BoxCollider2D:
   m_ObjectHideFlags: 0
