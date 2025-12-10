@@ -8,6 +8,7 @@ public class MainController : MonoBehaviour
 {
     public TMP_InputField playerNameInput;
     public TMP_Text playerNameError;
+    public TMP_Text playerNameConfirm;
 
     [SerializeField]
 
@@ -15,6 +16,7 @@ public class MainController : MonoBehaviour
     void Start()
     {
         playerNameError.text = "";
+        playerNameConfirm.text = "";
     }
 
     // Update is called once per frame
@@ -32,6 +34,8 @@ public class MainController : MonoBehaviour
         {
             Debug.Log("Player name submitted: " + playerName);
             PlayerPrefs.SetString(GameLogic.playerNameKey, playerName);
+            playerNameError.text = "";
+            playerNameConfirm.text = "Name '" + playerName + "' saved!";
         } else
         {
             playerNameError.text = "Invalid player name!";
